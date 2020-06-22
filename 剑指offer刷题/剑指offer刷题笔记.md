@@ -4,17 +4,6 @@
 [剑指Offer_编程题_牛客网](https://www.nowcoder.com/ta/coding-interviews)
 
 
-## 模板
-### 0. Title
-**题目描述**
-* * *
-**思路**
-* * *
-**代码实现**
-```
-
-```
-
 ## 数组(11道)
 ### 1.二维数组的查找
 
@@ -50,25 +39,25 @@ class Solution:
 # -*- coding:utf-8 -*-
 # 从左下角开始查找
 class Solution:
-    # array 二维列表
-    def Find(self, target, array):
-        # write code here
-        left = 0
-        right = len(array[0])-1
-        top = 0
-        bottom = len(array)-1
-         
-        while(top<=bottom and left<=right):
-            select_num = array[bottom][left]
-            if(select_num == target):
-                return True
-            elif(target > select_num):
-                left+=1
-                continue
-            elif(target < select_num):
-                bottom-=1
-                continue
-        return False
+    # array 二维列表
+    def Find(self, target, array):
+        # write code here
+        left = 0
+        right = len(array[0])-1
+        top = 0
+        bottom = len(array)-1
+         
+        while(top<=bottom and left<=right):
+            select_num = array[bottom][left]
+            if(select_num == target):
+                return True
+            elif(target > select_num):
+                left+=1
+                continue
+            elif(target < select_num):
+                bottom-=1
+                continue
+        return False
 ```
 
 ### 6. 旋转数组的最小数字
@@ -166,7 +155,7 @@ class Solution:
     def reOrderArray(self, array):
         # write code here
         # 时间复杂度O(n)，没有额外的数组空间。。
-        # 实际上pop(index)的时间复杂度是O(n)，删除元素时后面的元素往前移动，总的时间复杂度接近O(n^2)
+        # 实际上pop(index)的时间复杂度是O(n)，删除元素时后面的元素往前移动，总的时间复杂度接近O(n^2)
 
         lenth = len(array)
         move = 0
@@ -335,7 +324,7 @@ class Solution:
 暴力解，两个循环，时间复杂度$O(N^2)$，但是会超出运行时间，导致失败。
 思路二：
 分治的思想，将数组不断一分为二，直到数组中只有两个元素，统计逆序对个数。然后对相邻的两个子数组进行合并，由于已经统计了这两对子数组内部的逆序对，因此需要把这两对子数组进行排序，避免在之后的统计过程中重复统计。在合并的时候也要计算组间的逆序对个数。
-逆序对的总数 = 左边数组中的逆序对的数量 + 右边数组中逆序对的数量 + 左右结合成新的顺序数组时中出现的逆序对的数量
+逆序对的总数 = 左边数组中的逆序对的数量 + 右边数组中逆序对的数量 + 左右结合成新的顺序数组时中出现的逆序对的数量
 整个过程是一个归并排序的算法。
 归并排序的性能不受输入数据的影响，时间复杂度始终都是$O(nlogn)$。代价是需要额外的内存空间。
 * * *
@@ -714,7 +703,7 @@ class Solution:
 时间复杂度为$O(N)$
 可以把B[i]=A[0]A[1]....A[i-1]A[i+1]....A[n-1]。看成A[0]A[1].....A[i-1]和A[i+1].....A[n-2]A[n-1]两部分的乘积。
 即通过A[i]项将B[i]分为两部分的乘积。效果如下图所示：
-![86ef01a3437a287e328b9ca9daa75023.png](en-resource://database/423:1)
+![86ef01a3437a287e328b9ca9daa75023.png](en-resource://database/604:1)
 第一个for循环用来计算上图1范围的数，第二个for循环用来计算上图2范围的数。
 
 * * *
@@ -1197,9 +1186,9 @@ class Solution:
 2、重新遍历链表，复制老结点的随机指针给新结点，如A1.random = A.random.next;
 3、拆分链表，将链表拆分为原链表和复制后的链表
 思路图如下所示：
-![b65dcbe96f63a1bbc5e90d05a90b3185.png](en-resource://database/426:1)
-![630961800375adfb289c7342630b82af.png](en-resource://database/424:1)
-![a7ac4fadca297083976adea63f87c9de.png](en-resource://database/425:1)
+![b65dcbe96f63a1bbc5e90d05a90b3185.png](en-resource://database/607:1)
+![630961800375adfb289c7342630b82af.png](en-resource://database/605:1)
+![a7ac4fadca297083976adea63f87c9de.png](en-resource://database/606:1)
 代码也分3步来解决这个问题。分别是：(要注意节点的next为空的情况)
 第1次遍历，复制节点
 第2次遍历，复制random指针
@@ -1450,15 +1439,15 @@ class Solution:
 * * *
 **思路**
 前序遍历：根结点 ---> 左子树 ---> 右子树
-中序遍历：左子树---> 根结点 ---> 右子树
-后序遍历：左子树 ---> 右子树 ---> 根结点
+中序遍历：左子树---> 根结点 ---> 右子树
+后序遍历：左子树 ---> 右子树 ---> 根结点
 已知中序遍历和前序(或者后序)遍历可以确定一棵唯一的二叉树，已知前序遍历和后序遍历不能确定一棵唯一的二叉树。
 本题可用递归的思想，已知前序遍历和中序遍历，前序遍历的第一个节点必为根节点，这个节点可以将中序遍历划分成左子树和右子树。
 
 思想如下：
-      a、根据前序遍历结果，第一个元素为二叉树的根结点；
-      b、观察中序遍历结果，根结点左侧的为左子树，若左子树根结点前（后）再无任何元素，则左（右）子树的左分支为空；根结点右侧的为右子树，若右子树根结点前（后）再无任何元素，则左（右）子树的左分支为空；
-      c、上面的过程是递归的。先找到当前树的根结点，然后划分为左右子树，再进入左子树重复上面的过程，最后进入右子树重复上面的过程，最终还原一棵树。
+      a、根据前序遍历结果，第一个元素为二叉树的根结点；
+      b、观察中序遍历结果，根结点左侧的为左子树，若左子树根结点前（后）再无任何元素，则左（右）子树的左分支为空；根结点右侧的为右子树，若右子树根结点前（后）再无任何元素，则左（右）子树的左分支为空；
+      c、上面的过程是递归的。先找到当前树的根结点，然后划分为左右子树，再进入左子树重复上面的过程，最后进入右子树重复上面的过程，最终还原一棵树。
 * * *
 **代码实现**
 ```
@@ -1712,7 +1701,513 @@ function FindPath(root, expectNumber)
 }
 ```
 
+### 38. 二叉树的深度
+**题目描述**
+输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
+* * *
+**思路**
+二叉树的遍历，可以使用深度优先或者广度优先
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+// 深度优先搜索 DFS
+function TreeDepth(pRoot)
+{
+    // write code here
+    if(pRoot == null){
+        return 0
+    }
+    var left = TreeDepth(pRoot.left)
+    var right = TreeDepth(pRoot.right)
+    if(left>right){
+        return left+1
+    }
+    else{
+        return right+1
+    }
+}
+// 广度优先搜索 BFS
+function TreeDepth_2(pRoot)
+{
+    // write code here
+    if(pRoot == null){
+        return 0
+    }
+    var queue = []
+    var depth = 0
+    
+    queue.push(pRoot)
+    while (queue.length>0) {
+        const queueLength = queue.length
+        depth+=1
+        for (let index = 0; index < queueLength; index++) {
+            const element = queue[index];
+            if(element.left != null){
+                queue.push(element.left)
+            }
+            if(element.right != null){
+                queue.push(element.right)
+            }
+        }
+        // 删除从0开始，长度为queueLength的所有元素
+        queue.splice(0,queueLength)
+    }
+    return depth
+}
+```
+
+
+### 39. 平衡二叉树
+**题目描述**
+输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+
+在这里，我们只需要考虑其平衡性，不需要考虑其是不是排序二叉树
+* * *
+**思路**
+平衡二叉树的定义是：树中任意一个结点下左右两个子树的高度差不超过 1。
+方法一：
+对每个节点使用TreeDepth()，获取子树的深度，检查每个节点的左右子树是否平衡，这种方法从上到下会重复遍历多次，效率较低。
+方法二：
+使用后序遍历，在遍历每个节点时，已经遍历了这个节点的左右子树。如果左右子树是平衡的，则记录这个节点的深度，如果左右子树不平衡，返回false。这个方法从下到上只遍历一次，效率较高。
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+/ 对每个节点使用TreeDepth()，获取子树的深度，会重复遍历多次
+function IsBalanced_Solution(pRoot)
+{
+    if (pRoot == null) {
+        return true
+    }
+    var left = TreeDepth(pRoot.left)
+    var right = TreeDepth(pRoot.right)
+    
+    if(Math.abs(left-right)>1){
+        return false
+    }
+    return IsBalanced_Solution(pRoot.left) && IsBalanced_Solution(pRoot.right)
+}
+// 深度优先搜索 DFS 返回树的深度
+function TreeDepth(pRoot)
+{
+    // write code here
+    if(pRoot == null){
+        return 0
+    }
+    var left = TreeDepth(pRoot.left)
+    var right = TreeDepth(pRoot.right)
+    if(left>right){
+        return left+1
+    }
+    else{
+        return right+1
+    }
+}
+
+
+// 只遍历一次
+// 使用后序遍历，在遍历每个节点时，已经遍历了这个节点的左右子树。
+//  如果左右子树是平衡的，则记录这个节点的深度，如果左右子树不平衡，返回false
+function IsBalanced_Solution_2(pRoot)
+{
+    if (pRoot == null) {
+        return true
+    }
+    var res = IsBalanced(pRoot)
+    // return !(res === false) 
+    return res
+}
+function IsBalanced(node)
+{
+    if(node == null){
+        return 0
+    }
+    let left =  IsBalanced(node.left)
+    let right =  IsBalanced(node.right)
+    if(left===false || right===false){
+        return false
+    }
+    if(Math.abs(left-right)>1){
+        return false
+    }
+    else{
+        return Math.max(left,right)+1
+    }
+}
+```
+
+### 57. 二叉树的下一个结点
+**题目描述**
+给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+* * *
+**思路**
+中序遍历的规则是：左->根->右
+画个图我们可以发现这道题的规律：
+1. 如果当前节点有右子树，则此节点的下个节点是右子树的最左边节点
+2. 如果当前节点没有右子树：
+    1.如果当前节点是父节点的左子节点，那么下个节点就是父节点；
+    2.如果节点是其父节点的右子节点，就一直往上找，找到使此节点的祖宗节点是一个节点的左子节点，如果存在这样的节点，那么就返回这个节点，如果不存在，则说明此时遍历的接点是整个树的最右节点，返回null
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+function GetNext(pNode)
+{
+    // write code here
+    if(pNode == null){
+        return null
+    }
+    // 1. 如果当前节点有右子树，则此节点的下个节点是右子树的最左边节点
+    if(pNode.right != null){
+        let node = pNode.right
+        while(node.left != null){
+            node = node.left
+        }
+        return node
+    }
+    // 2. 如果当前节点没有右子树：
+    while(pNode.next!=null){
+        // 1.如果当前节点是其父节点的左子节点，那么下个节点就是父节点；
+        if (pNode.next.left == pNode) {
+            // 如果存在这样的节点，那么就返回这个节点
+            return pNode.next
+        }
+        // 2.如果节点是其父节点的右子节点，就一直往上找，找到使此节点的祖宗节点是一个节点的左子节点
+        pNode = pNode.next
+    }
+    // 如果不存在，则说明此时遍历的接点是整个树的最右节点，返回null
+    return null
+}
+```
+### 58. 对称的二叉树
+**题目描述**
+请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+* * *
+**思路**
+递归：
+1.只要pRoot.left和pRoot.right是否对称即可
+2.左右节点的值相等且对称子树left.left，right.right ;left.rigth,right.left也对称
+
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+function isSymmetrical(pRoot)
+{
+    // write code here
+    if(pRoot == null){
+        return true
+    }
+    return checkSymmetrical(pRoot.left,pRoot.right)
+}
+function checkSymmetrical(left,right){
+    if (left == null && right == null){
+        return true
+    }
+    else if((left==null&&right!=null)||(left!=null&&right==null)||(left.val!=right.val)){
+        return false
+    }
+    else{
+        return checkSymmetrical(left.left,right.right)&&checkSymmetrical(right.left,left.right)
+    }
+}
+```
+
+### 59. 按之字顺序打印二叉树
+**题目描述**
+请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+* * *
+**思路**
+层序遍历，每一层判断是否要将这层的节点逆序输出，将结果放在一个数组中输出。
+层序遍历是用到一个队列数组，输出结果又是一个数组，所以用到两个数组。
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+/* function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} */
+function Print(pRoot)
+{
+    // write code here
+    if(pRoot==null){
+        return []
+    }
+    let result = []
+    let queue = []
+    let isReverse = false
+    queue.push(pRoot)
+    
+    while(queue.length>0){
+        let len = queue.length
+        let tempArray = []
+        for(let i=0; i<len; i++){
+            let tempNode = queue[i]
+            tempArray.push(tempNode.val)
+            if(tempNode.left!=null){
+                queue.push(tempNode.left)
+            }
+            if(tempNode.right!=null){
+                queue.push(tempNode.right)
+            }
+        }
+        queue.splice(0,len)
+        if(isReverse){
+            tempArray.reverse()
+        }
+        isReverse = !isReverse
+        result.push(tempArray)
+    }
+    
+    return result
+}
+```
+
+### 60. 把二叉树打印成多行
+**题目描述**
+从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
+* * *
+**思路**
+二叉树的层序遍历
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+class Solution:
+    # 返回二维列表[[1,2],[4,5]]
+    def Print(self, pRoot):
+        # write code here
+        res = []
+        queue = []
+        if(pRoot == None):
+            return []
+        queue.append(pRoot)
+        while(len(queue)>0):
+            temp = []
+            qlen = len(queue)
+            for i in range(0,qlen):
+                node = queue.pop(0)
+                temp.append(node.val)
+                if(node.left != None):
+                    queue.append(node.left)
+                if(node.right != None):
+                    queue.append(node.right)
+            res.append(temp)
+        return res
+```
+**JavaScript代码实现**
+```js
+/* function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} */
+function Print(pRoot)
+{
+    // write code here
+    let res = []
+    let queue = []
+    if(pRoot == null){
+        return res
+    }
+    queue.push(pRoot)
+    while(queue.length>0){
+        let len = queue.length
+        let temp = []
+        for(let i=0;i<len;i++){
+           temp.push(queue[i].val)
+           if(queue[i].left !== null){
+               queue.push(queue[i].left)
+           }
+            if(queue[i].right !== null){
+               queue.push(queue[i].right)
+           }
+        }
+        res.push(temp)
+        queue.splice(0,len)
+    }
+    return res
+}
+```
+
+### 61. 序列化二叉树
+**题目描述**
+请实现两个函数，分别用来序列化和反序列化二叉树
+
+二叉树的序列化是指：把一棵二叉树按照某种遍历方式的结果以某种格式保存为字符串，从而使得内存中建立起来的二叉树可以持久保存。序列化可以基于先序、中序、后序、层序的二叉树遍历方式来进行修改，序列化的结果是一个字符串，序列化时通过 某种符号表示空节点（#），以 ！ 表示一个结点值的结束（value!）。
+二叉树的反序列化是指：根据某种遍历顺序得到的序列化字符串结果str，重构二叉树。
+例如，我们可以把一个只有根节点为1的二叉树序列化为"1,"，然后通过自己的函数来解析回这个二叉树
+* * *
+**思路**
+使用前序遍历做，空节点可以用#表示，所以单独使用前序遍历的结果也可以唯一的构建一棵二叉树。
+序列化的时候使用递归做，需要在序列化的函数内部包装一个函数，防止在递归时影响返回的结果。
+反序列化的时候也可以使用递归。
+可以画个图理解一下递归的流程。
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+class Solution:
+    def Serialize(self, root):
+        # write code here
+        res =[]
+        def innerFunction(root,res):
+            if(root == None):
+                res.append('#')
+            else:
+                res.append(root.val)
+                innerFunction(root.left,res)
+                innerFunction(root.right,res)
+        innerFunction(root,res)
+        return res
+    def Deserialize(self, s):
+        # write code here
+        if(len(s)<1):
+            return None
+        node = None
+        num = s.pop(0)
+        if(num != '#'):
+            node = TreeNode(num)
+            node.left = self.Deserialize(s)
+            node.right = self.Deserialize(s)
+        return node
+```
+**JavaScript代码实现**
+```js
+/* function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} */
+
+// function Serialize(pRoot)
+// {
+//     // write code here
+//     // 这样的情况会导致在调用递归时影响res的值，所以要么把res的定义提出去，要么再套一个函数
+//     let res= []
+//     if(pRoot == null){
+//         res.push('#')
+//     }
+//     else{
+//         res.push(pRoot.val)
+//         Serialize(pRoot.left)
+//         Serialize(pRoot.right)
+//     }
+//     return res
+// }
+
+function Serialize(pRoot)
+{
+    // write code here
+    let res = []
+    function innerFunction(pRoot){
+        if(pRoot == null){
+            res.push('#')
+        }
+        else{
+            res.push(pRoot.val)
+            innerFunction(pRoot.left)
+            innerFunction(pRoot.right)
+        }
+    }
+    innerFunction(pRoot)
+    return res
+}
+function Deserialize(s)
+{
+    // write code here
+    if(s.length<1){
+        return null
+    }
+    let node = null
+    let num = s.shift()
+    if(typeof num == 'number'){
+        node = new TreeNode(num)
+        node.left = Deserialize(s)
+        node.right = Deserialize(s)
+    }
+    return node
+}
+```
+
+## 二叉搜索树
+### 23. 二叉搜索树的后序遍历序列
+**题目描述**
+* * *
+**思路**
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+
+```
+### 26. 二叉搜索树与双向链表
+**题目描述**
+* * *
+**思路**
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+
+```
+
+### 62. 二叉搜索树的第k个节点
+**题目描述**
+* * *
+**思路**
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+
+```
+
+
 ## 递归
+### 尾调用和尾递归
+函数调用会在内存中形成一个调用记录，又称调用帧，保存调用位置和内部变量等信息，函数内调用函数又会引入新的调用帧，所有的调用帧形成了一个调用栈。
+由于尾调用是函数的最后一步操作，所以不需要保留外层函数的调用帧，因为外层函数的调用位置和内部变量等信息不会再用到了，直接用内层函数的调用帧取代外层函数即可。
+只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则无法进行尾调用化。
+尾用自身称之为尾递归。
+尾递归可以进行递归优化。
 ### 7. 斐波那契数列
 **题目描述**
 大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0，第1项是1）。n<=39
@@ -1772,47 +2267,114 @@ function FindPath(root, expectNumber)
 ```
 **javascript代码实现**
 ```js
+// 递归
+function Fibonacci(n)
+{
+    // write code here
+    if(n<1){
+        return 0
+    }
+    if(n == 1 || n == 2){
+        return 1
+    }
+    return Fibonacci(n-2) + Fibonacci(n-1)
+}
+// 尾递归优化
+function Fibonacci_2(n, acc, cal){
+    if (n<1) {
+        return 0
+    }
+    if (n==1) {
+        return acc
+    }
+    if (n==2) {
+        return cal
+    }   
+    return Fibonacci_2(n-1, cal, acc+cal)
+}
+// 使用额外空间
+function Fibonacci_3(n){
+    if(n<1){
+        return 0
+    }
+    let a = 0
+    let b = 1
+    let index = 1
+    while (index<n) {
+        let temp = a
+        a = b
+        b = a + temp
+        index += 1
+    }
+    return b
+}
+```
+### 8. 跳台阶
+**题目描述**
+一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+* * *
+**思路**
+可以将其转化为一个递归问题，跳n级台阶可能性可以分为两种情况，一是最后一步跳1阶，二是最后一步跳2阶，所以f(n) = f(n-1)+f(n-2)，相当于是个斐波那契问题了，但是这个问题的递归出口不一样，n<3时，f(n) = n。
+对递归的优化方法一般有尾递归优化和使用额外空间进行优化。
+* * *
+**Python代码实现**
+```python
 
-// 递归
-function Fibonacci(n)
+```
+**JavaScript代码实现**
+思路一：使用递归
+```js
+function jumpFloor(number)
 {
     // write code here
-    if(n<1){
-        return 0
+    // 递归出口
+    if(number<3){
+        return number
     }
-    if(n == 1 || n == 2){
-        return 1
-    }
-    return Fibonacci(n-2) + Fibonacci(n-1)
+    return jumpFloor(number-1) + jumpFloor(number-2)
 }
-// 尾递归优化
-function Fibonacci_2(n, acc, cal){
-    if (n<1) {
-        return 0
+```
+思路二：使用额外空间优化递归
+```js
+function jumpFloor(number)
+{
+    // write code here
+    // 递归出口
+    if(number<3){
+        return number
     }
-    if (n==1) {
-        return acc
-    }
-    if (n==2) {
-        return cal
-    }   
-    return Fibonacci_2(n-1, cal, acc+cal)
-}
-// 使用额外空间
-function Fibonacci_3(n){
-    if(n<1){
-        return 0
-    }
-    let a = 0
-    let b = 1
-    let index = 1
-    while (index<n) {
+    // 使用额外空间优化递归
+    let a = 1
+    let b = 2
+    let index = 3
+    while(index <= number){
         let temp = a
         a = b
-        b = a + temp
+        b = a+temp
         index += 1
     }
     return b
+}
+```
+思路三：尾递归优化
+```js
+function jumpFloor(number)
+{
+    // write code here
+    return jump(number,1,2)
+}
+
+function jump(n,a,b){
+    if(n<1){
+        return 0
+    }
+    if(n==1){
+        return a
+    }
+    if(n==2){
+        return b
+    }
+    return jump(n-1,b,a+b)
 }
 ```
 ## 题解笔记模板
@@ -1821,11 +2383,12 @@ function Fibonacci_3(n){
 * * *
 **思路**
 * * *
-**python代码实现**
+**Python代码实现**
 ```python
 
 ```
-**javascript代码实现**
+**JavaScript代码实现**
 ```js
 
 ```
+
