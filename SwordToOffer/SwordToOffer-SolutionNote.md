@@ -2950,7 +2950,7 @@ function IsPopOrder(pushV, popV)
 如果一个整数不为0，那么这个整数至少有一位是1。如果我们把这个整数减1，那么原来处在整数最右边的1就会变为0，原来在1后面的所有的0都会变成1(如果最右边的1后面还有0的话)。其余所有位将不会受到影响。
 
 举个例子：一个二进制数1100，从右边数起第三位是处于最右边的一个1。减去1后，第三位变成0，它后面的两位0变成了1，而前面的1保持不变，因此得到的结果是1011.我们发现减1的结果是把最右边的一个1开始的所有位都取反了。这个时候如果我们再把原来的整数和减去1之后的结果做与运算，从原来整数最右边一个1那一位开始所有位都会变成0。如1100&1011=1000.也就是说，把一个整数减去1，再和原整数做与运算，会把该整数最右边一个1变成0.那么一个整数的二进制有多少个1，就可以进行多少次这样的操作。
- 
+
 在Python中，由于负数使用补码表示的，对于负数，最高位为1，而负数在计算机是以补码存在的，往右移，符号位不变，符号位1往右移，最终可能会出现全1的情况，导致死循环。与0xffffffff相与，就可以消除负数的影响。
 [剑指offer：二进制中1的个数（Python）& 0xffffffff](https://blog.csdn.net/qq_34872215/article/details/88936030?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.nonecase)
 
@@ -2983,7 +2983,92 @@ function NumberOf1(n)
     return count
 }
 ```
+### 12. 数值的整数次方
+**题目描述**
+给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
 
+保证base和exponent不同时为0
+* * *
+**思路**
+快速幂算法 https://blog.csdn.net/qq_19782019/article/details/85621386
+A^B = (A^2)^(B/2) 令指数折半变小，底数成倍变大，可以加快运算效率
+
+power%2==1可以用更快的“位运算”来代替，power&1 = 1
+对于power=power/2来说，也可以用更快的“位运算”进行替代 power = power >> 1 （是向下取整的）
+
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    def Power(self, base, exponent):
+        # write code here
+        baseFlag = 1 # 底数正负号
+        exponentFlag = 1 # 指数正负号
+        res = 1 # 结果
+        if(exponent < 0):
+            exponentFlag = -1
+            exponent = exponent * -1
+        if(base < 0):
+            base = -1 * base 
+            if(exponent&1 != 0):
+                baseFlag = -1 
+                
+        while exponent > 0:
+            if(exponent&1 == 0):
+                exponent = exponent>>1
+                base = base**2
+            else:
+                exponent = exponent>>1
+                res = res * base
+                base = base**2
+        if(exponentFlag == -1):
+            res = 1 / res
+        if(baseFlag == -1):
+            res = res * -1
+        return res
+```
+**JavaScript代码实现**
+```js
+function Power(base, exponent)
+{
+    // write code here
+    let res = 1
+    let baseFlag = 1 // 底数正负号
+    let exponentFlag = 1 // 指数正负号
+    if(exponent < 0){
+        exponentFlag = -1
+        exponent = -1*exponent
+    }
+    if(base < 0){
+        base = -1 * base
+        // exponent%2等价于exponent&1
+        if(exponent&1 != 0){
+            baseFlag = -1
+        }
+    } 
+    while(exponent > 0){
+        // 如果指数是偶数
+        // exponent%2等价于exponent&1
+        if(exponent&1 == 0){
+            // exponent/2 等价于exponent>>1
+            exponent = exponent>>1
+            base = base**2
+        }
+        // 如果指数是奇数 
+        else{
+            // (exponent - 1)/2 等价于exponent>>1 （向下取整）
+            exponent = exponent>>1 
+            res = res * base
+            base = base**2
+        }
+    }
+    if(exponentFlag == -1){
+        res = 1/res
+    }
+    return baseFlag*res
+}
+```
 
 
 ## 题解笔记模板
