@@ -2158,50 +2158,291 @@ function Deserialize(s)
 }
 ```
 
-## 二叉搜索树
+## 二叉搜索树（3道）
 ### 23. 二叉搜索树的后序遍历序列
 **题目描述**
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同
 * * *
 **思路**
+二叉搜索树：节点的左子树上的节点都比节点值小，节点的右子树上的节点都比节点值大。
+中序遍历二叉搜索树会得到一个递增序列。
+
+本题采用递归的思路，首先根据最后一位是根节点，小于根节点的左子树，大于根节点的是右子树，对左右子树进行递归判断是否是二叉搜索树，递归出口是节点没有左右子树时返回true。
 * * *
 **Python代码实现**
 ```python
-
+# -*- coding:utf-8 -*-
+class Solution:
+    def VerifySquenceOfBST(self, sequence):
+        # write code here
+        length = len(sequence)
+        if(length<=0):
+            return False
+        if(length==1):
+            return True
+        i = 0
+        root = sequence[-1]
+        while(sequence[i]<root):
+            i += 1
+        sepIndex = i
+        for j in range(i,length):
+            if(sequence[j]<root):
+                return False
+        leftSquence = sequence[0:sepIndex]
+        rightSquence = sequence[sepIndex:-2]
+        left,right = True, True
+        if(len(leftSquence)>0):
+            left = self.VerifySquenceOfBST(leftSquence) 
+        if(len(rightSquence)<0):
+            rigth = self.VerifySquenceOfBST(rightSquence) 
+        return left and right
 ```
 **JavaScript代码实现**
 ```js
-
+function VerifySquenceOfBST(sequence)
+{
+    // write code here
+    if(sequence.length <= 0){
+        return false
+    }
+    if(sequence.length == 1){
+        return true
+    }
+    let length = sequence.length
+    let root = sequence[length-1]
+    let i = 0
+    while(sequence[i]<root){
+        i += 1 
+    }
+    let sepIndex = i
+    for(let j = i; j<length; j++){
+        if(sequence[j]<root){
+            return false
+        }
+    }
+    let leftSquence = sequence.slice(0,sepIndex-1)
+    let rightSquence = sequence.slice(sepIndex+1,length-1)
+    let left = true
+    let right = true
+    if(leftSquence.length>0){
+        left = VerifySquenceOfBST(leftSquence)
+    }    
+    if(rightSquence.length>0){
+        right = VerifySquenceOfBST(rightSquence)
+    }  
+    return left && right
+}
 ```
 ### 26. 二叉搜索树与双向链表
 **题目描述**
 * * *
 **思路**
+根据二叉搜索树的特点：左结点的值<根结点的值<右结点的值，使用中序遍历。
+使用递归分别遍历左右子树，将返回值定为最左节点或者是最右节点，对于不同的情况对链表进行连接，得到一个确定的链表，然后返回我们预定的最左节点或最右节点。
 * * *
 **Python代码实现**
 ```python
+# -*- coding:utf-8 -*-
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+class Solution:
+    def Convert(self, pRootOfTree):
+        # write code here
+        if(pRootOfTree == None):
+            return pRootOfTree
+        lastNode = self.BSTtoBiChainTable(pRootOfTree)
+        while(lastNode != None and lastNode.left != None):
+            lastNode = lastNode.left
+        return lastNode
 
+    def BSTtoBiChainTable(self, pRoot):
+        if(pRoot == None):
+            return None
+        if(pRoot.left == None and pRoot.right == None):
+            return pRoot
+        
+        left = self.BSTtoBiChainTable(pRoot.left)
+        if(left != None):
+            left.right = pRoot
+            pRoot.left = left
+        right = self.BSTtoBiChainTable(pRoot.right)
+        last = right
+        if(right != None):
+            while(right.left != None):
+                right = right.left
+            pRoot.right = right
+            right.left = pRoot
+        else:
+            return pRoot
+        return last
 ```
 **JavaScript代码实现**
 ```js
+/* function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} */
+function Convert(pRootOfTree)
+{
+    // write code here
+    if(pRootOfTree == null){
+        return pRootOfTree
+    }
+    let lastNode = BSTtoBiChainTable(pRootOfTree)
+    while(lastNode!=null && lastNode.left!=null){
+        lastNode = lastNode.left
+    }
+    return lastNode
+}
 
+// BST的中序遍历 返回双向链表
+function BSTtoBiChainTable(pRoot){
+    if(pRoot == null){
+        return null
+    }
+    if(pRoot.left == null && pRoot.right == null){
+        return pRoot
+    }
+
+    // 遍历左子树
+    let left = null 
+    if(pRoot.left != null){
+        left = BSTtoBiChainTable(pRoot.left)
+    }
+    // 连接左子树链表与根节点
+    if(left != null){
+        left.right = pRoot
+        pRoot.left = left
+    }
+    
+    // 遍历右子树
+    let right = null 
+    if(pRoot.right != null){
+        right = BSTtoBiChainTable(pRoot.right)
+    }
+    let last = right
+    // 连接右子树链表与根节点
+    if(right != null){
+        while(right.left != null){
+            right = right.left
+        }
+        right.left = pRoot
+        pRoot.right = right
+    }
+    else{
+        return pRoot
+    }
+    return last
+}
 ```
 
 ### 62. 二叉搜索树的第k个节点
 **题目描述**
+给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）    中，按结点数值大小顺序第三小结点的值为4。
 * * *
 **思路**
+使用中序遍历，返回一个节点值由小到大的节点数组
+中序遍历的两种思路
+方法一：递归
+方法二：使用栈
 * * *
 **Python代码实现**
 ```python
-
+# -*- coding:utf-8 -*-
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+class Solution:
+    # 返回对应节点TreeNode
+    def KthNode(self, pRoot, k):
+        # write code here
+        res = self.BSTtoNodeList(pRoot)
+        if(k>0 and k<=len(res)):
+            return res[k-1]
+        return None
+    # 方法一 中序遍历 递归
+    def BSTtoNodeList(self, pRoot):
+        if(pRoot == None):
+            return []
+        if(pRoot.left == None and pRoot.right == None):
+            return [pRoot]
+        left = self.BSTtoNodeList(pRoot.left)
+        right = self.BSTtoNodeList(pRoot.right)
+        res = left+[pRoot]+right
+        return res
+    # 方法二 栈
+    def BSTtoNodeList(self, pRoot):
+        res = []
+        stack = []
+        nowNode = pRoot
+        while(nowNode or len(stack)>0):
+            while(nowNode):
+                stack.append(nowNode)
+                nowNode = nowNode.left
+            nowNode = stack.pop()
+            res.append(nowNode)
+            nowNode = nowNode.right
+        return res   
 ```
 **JavaScript代码实现**
 ```js
-
+/* function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} */
+function KthNode(pRoot, k)
+{
+    // write code here
+    let arr = BSTtoSquence(pRoot)
+    if (k > 0 && k <= arr.length) {
+        return arr[k - 1]
+    }
+    return null
+}
+// 用栈 返回从大到小的节点数组
+function BSTtoSquence(pRoot){
+    let res = [],
+        stack = [],
+        tempNode = pRoot
+    while(tempNode || stack.length>0){
+        while(tempNode){
+            stack.push(tempNode)
+            tempNode = tempNode.left
+        }
+        tempNode = stack.pop()
+        res.push(tempNode)
+        tempNode=tempNode.right
+    }
+    return res
+}
+// BST的中序遍历 返回从大到小的中序遍历节点数组
+function BSTtoSquence(pRoot){
+    
+    if(pRoot == null){
+        return []
+    }
+    if(pRoot.left == null && pRoot.right == null){
+        return [pRoot]
+    }
+    // 递归左子树
+    let left = BSTtoSquence(pRoot.left)
+    // 递归右子树
+    let right = BSTtoSquence(pRoot.right)
+    // 中序遍历连接
+    let res = left.concat(pRoot).concat(right)
+    return res
+}
 ```
 
 
-## 递归
+## 递归（4道）
 ### 尾调用和尾递归
 函数调用会在内存中形成一个调用记录，又称调用帧，保存调用位置和内部变量等信息，函数内调用函数又会引入新的调用帧，所有的调用帧形成了一个调用栈。
 由于尾调用是函数的最后一步操作，所以不需要保留外层函数的调用帧，因为外层函数的调用位置和内部变量等信息不会再用到了，直接用内层函数的调用帧取代外层函数即可。
@@ -2377,6 +2618,374 @@ function jump(n,a,b){
     return jump(n-1,b,a+b)
 }
 ```
+
+### 9. 变态跳台阶
+**题目描述**
+一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+* * *
+**思路**
+找规律，
+所要求的序列为：1,2,4,8,16,……
+归纳发现`F(n)=2^(n-1)`
+
+还发现一种骚操作，位运算
+结果是2进制每位的值
+结果是1<<(n-1)
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    def jumpFloorII(self, number):
+        # write code here
+        return 2**(number-1)
+
+# -*- coding:utf-8 -*-
+class Solution:
+    def jumpFloorII(self, number):
+        # write code here
+        return 1<<(number-1)
+```
+**JavaScript代码实现**
+```js
+
+function jumpFloorII(number)
+{
+    // write code here
+    if(number<=2){
+        return number
+    }
+    return 2**(number-1)
+}
+
+function jumpFloorII(number)
+{
+    // write code here
+    return 1<<(number-1) 
+}
+```
+### 10. 矩形覆盖
+**题目描述**
+我们可以用2乘1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2乘1的小矩形无重叠地覆盖一个2乘n的大矩形，总共有多少种方法？
+* * *
+**思路**
+竖排1个矩形，还剩F(n-1)；
+横排2个矩形，还剩F(n-2)；
+结果是F(n)=F(n-1)+F(n-2)
+直接这么写会复杂度过高，无法通过
+需要优化递归
+使用额外空间 或者 尾递归
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+# 使用额外空间
+class Solution:
+    def rectCover(self, number):
+        # write code here
+        if(number<=2):
+            return number
+        a = 1
+        b = 2 
+        for i in range(3,number+1):
+            temp = b
+            b = a + b
+            a = temp
+        return b
+
+
+# -*- coding:utf-8 -*-
+# 尾递归
+class Solution:
+    def rectCover(self, number):
+        # write code here
+        return self.tailRectCover(number, 1, 2)
+    def tailRectCover(self, number, a, b):
+        if(number<1):
+            return 0
+        if(number == 1):
+            return a
+        if(number == 2):
+            return b
+        return self.tailRectCover(number-1, b, a+b)
+```
+**JavaScript代码实现**
+```js
+// 直接递归
+function rectCover(number)
+{
+    // write code here
+    if(number<=2){
+        return number
+    }
+    return rectCover(number-2) + rectCover(number-1)
+}
+// 额外空间
+function rectCover(number)
+{
+    // write code here
+    if(number<=2){
+        return number
+    }
+    let a = 1
+    let b = 2
+    while(number>2){
+        let temp = b
+        b = a + b
+        a = temp
+        number-=1
+    }
+    return b
+}
+// 尾递归
+function rectCover(number)
+{
+    // write code here
+    return tailRectCover(number,1,2)
+    
+}
+function tailRectCover(number,a,b){
+    if(number < 1){
+        return 0
+    }
+    if(number == 1){
+        return a
+    }
+    if(number == 2){
+        return b
+    }
+    return tailRectCover(number-1,b,a+b)
+}
+```
+## 栈（3道）
+### 5. 用两个栈实现队列
+**题目描述**
+用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+* * *
+**思路**
+栈先进后出，队列先进先出
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+stack1 = []
+stack2 = []
+class Solution:
+    def push(self, node):
+        # write code here
+        stack1.append(node)
+    def pop(self):
+        # return xx
+        if(len(stack2)==0):
+            while(len(stack1)>0):
+                stack2.append(stack1.pop())
+        return stack2.pop()
+```
+**JavaScript代码实现**
+```js
+const stack1 = []
+const stack2 = []
+function push(node) {
+    // write code here
+    stack1.push(node)
+}
+function pop() {
+    // write code here
+    if (stack2.length === 0) {
+        while (stack1.length > 0) {
+            stack2.push(stack1.pop())
+        }
+    }
+    return stack2.pop()
+}
+```
+
+### 20. 包含min函数的栈
+**题目描述**
+定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+注意：保证测试中不会当栈为空的时候，对栈调用pop()或者min()或者top()方法。
+* * *
+**思路**
+用两个数组/栈模拟这个栈数据结构，将最小数放在min栈中，min始终指向min栈的栈顶。
+注意：pop的时候会改变栈中数据，有可能min的结果也会改变，所以pop的元素等于min栈顶元素时，min也要出栈。
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    def __init__(self):
+        self.dataStack = []
+        self.minStack = []
+    def push(self, node):
+        # write code here
+        self.dataStack.append(node)
+        if(len(self.minStack)==0):
+            self.minStack.append(node)
+        else:
+            if node <= self.minStack[-1]:
+                self.minStack.append(node)
+    def pop(self):
+        # write code here
+        if(len(self.dataStack)==0):
+            return None
+        res = self.dataStack.pop()
+        if(res == self.minStack[-1]):
+            self.minStack.pop()
+        return res
+    def top(self):
+        # write code here
+        if(len(self.dataStack)==0):
+            return None
+        return self.dataStack[-1]
+    def min(self):
+        # write code here
+        if(len(self.minStack)==0):
+            return None
+        return self.minStack[-1]
+```
+**JavaScript代码实现**
+```js
+const dataStack = []
+const minStack = []
+function push(node)
+{
+    // write code here
+    dataStack.push(node)
+    if(minStack.length === 0){
+        minStack.push(node)
+    }
+    else{
+        if(node <= minStack[minStack.length-1]){
+            minStack.push(node)
+        }
+    }  
+}
+function pop()
+{
+    // write code here
+    if(dataStack.length === 0){
+        return null
+    }
+    let res = dataStack.pop()
+    if(res === minStack[minStack.length-1]){
+        minStack.pop()
+    }
+    return res
+}
+function top()
+{
+    // write code here
+    if(dataStack.length === 0 ){
+        return null
+    }
+    return dataStack[dataStack.length-1]
+}
+function min()
+{
+    // write code here
+    if(minStack.length === 0){
+        return null
+    }
+    return minStack[minStack.length-1]
+}
+```
+### 21. 栈的压入、弹出序列
+**题目描述**
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+* * *
+**思路**
+使用一个临时栈，模拟压入弹出序列的进出栈操作，当push序列完成后，如果临时栈为空，则证明进出序列可能是操作了同一个栈。
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    def IsPopOrder(self, pushV, popV):
+        # write code here
+        if(len(pushV) != len(popV) and len(pushV) == 0):
+            return False
+        tempStack = []
+        for i in pushV:
+            tempStack.append(i)
+            while tempStack and tempStack[-1] == popV[0]:
+                tempStack.pop()
+                popV.pop(0)
+        if(tempStack):
+            return False
+        return True
+```
+**JavaScript代码实现**
+```js
+function IsPopOrder(pushV, popV) 
+{
+    // write code here
+    if (pushV.length == 0 || pushV.length != popV.length) {
+        return false
+    }
+    let tempStack = []
+    for (let i of pushV) {
+        tempStack.push(i)
+        while (tempStack.length > 0 && tempStack[tempStack.length - 1] == popV[0]) {
+            tempStack.pop()
+            popV.shift()
+        }
+    }
+    if (tempStack.length == 0) {
+        return true
+    }
+    return false
+}
+```
+## 其他（15道）
+### 11. 二进制中1的个数
+**题目描述**
+
+输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
+
+* * *
+**思路**
+
+[机器数、真值、原码、反码、补码](https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html)
+
+如果一个整数不为0，那么这个整数至少有一位是1。如果我们把这个整数减1，那么原来处在整数最右边的1就会变为0，原来在1后面的所有的0都会变成1(如果最右边的1后面还有0的话)。其余所有位将不会受到影响。
+
+举个例子：一个二进制数1100，从右边数起第三位是处于最右边的一个1。减去1后，第三位变成0，它后面的两位0变成了1，而前面的1保持不变，因此得到的结果是1011.我们发现减1的结果是把最右边的一个1开始的所有位都取反了。这个时候如果我们再把原来的整数和减去1之后的结果做与运算，从原来整数最右边一个1那一位开始所有位都会变成0。如1100&1011=1000.也就是说，把一个整数减去1，再和原整数做与运算，会把该整数最右边一个1变成0.那么一个整数的二进制有多少个1，就可以进行多少次这样的操作。
+ 
+在Python中，由于负数使用补码表示的，对于负数，最高位为1，而负数在计算机是以补码存在的，往右移，符号位不变，符号位1往右移，最终可能会出现全1的情况，导致死循环。与0xffffffff相与，就可以消除负数的影响。
+[剑指offer：二进制中1的个数（Python）& 0xffffffff](https://blog.csdn.net/qq_34872215/article/details/88936030?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-8.nonecase)
+
+Python里的数是无所谓Overflow的，即没有位数限制，因此也就无所谓补码，因为补码都是相对于位数来说的，32位补码和16位补码，肯定是不一样的。但是这样就导致了一个问题，就是无法直接得到32位二进制补码。
+* * *
+**Python代码实现**
+
+```python
+class Solution:
+    def NumberOf1(self, n):
+        # write code here
+        count = 0
+        if(n<0):
+            n = n&0xffffffff
+        while (n):
+            count += 1
+            n = n & (n-1)
+        return count
+```
+**JavaScript代码实现**
+```js
+function NumberOf1(n)
+{
+    // write code here
+    let count = 0
+    while(n){
+        count += 1
+        n = n&(n-1)
+    }
+    return count
+}
+```
+
+
+
 ## 题解笔记模板
 ### 0. Title
 **题目描述**
