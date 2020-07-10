@@ -9,7 +9,9 @@
 function printMatrix(matrix) {
     // write code here
     let result = []
-    while (matrix) {
+    while (matrix == true) {
+        console.log(matrix)
+        console.log(result)
         result = result.concat(matrix.shift())
         matrix = rotateMatrix(matrix)
     }
@@ -25,18 +27,18 @@ function rotateMatrix(matrix) {
 // 上下翻转矩阵 只接受Array作为参数
 function reverseMatrix(matrix) {
 
-    if(typeof matrix == "number"){
-        return [].push(matrix)
-    }
+    // if(typeof matrix == "number"){
+    //     return [].push([].push(matrix))
+    // }
     let row = matrix.length
-    // [5] [[5]]
+    // [5] [[5]] [[5,6]]
     if (row <= 1) {
         // [5]
-        if (typeof(matrix[0]) == "number") {
-            return matrix
-        }
+        // if (typeof(matrix[0]) == "number") {
+        //     return [].push(matrix)
+        // }
         // [[5]]
-        return matrix[0] // [5]
+        return matrix // [[5]] [[5,6]]
     }
     // 初始化res
     let res = []
@@ -50,29 +52,28 @@ function reverseMatrix(matrix) {
     }
     return res
 }
-// 主对角线翻转矩阵 矩阵转置
+// 主对角线翻转矩阵 矩阵转置 只接受Array作为参数
 function transMatrix(matrix) {
     let row = matrix.length
     let res = []
-    
     // [[10,11]] [11] [[11]]
     if (row <= 1) {
         // [11]
-        if (typeof(matrix[0]) == "number") {
-            return matrix // [11]
-        }
+        // if (typeof(matrix[0]) == "number") {
+        //     return [].push(matrix) // [[11]]
+        // }
         // [[10,11]] [[11]]
         if(matrix[0] instanceof Array){
             // [[11]]
             if(matrix[0].length <= 1){
-                return matrix[0] // [11]
+                return matrix // [[11]]
             }
             // [[10,11]]
             for (let indexI = 0; indexI < matrix[0].length; indexI++) {
                 res[indexI] = []
                 res[indexI][0] = matrix[0][indexI]
             }
-            console.log(res)
+            // console.log(res)
             return res
         }
     }
@@ -90,7 +91,8 @@ function transMatrix(matrix) {
 }
 
 let a = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
-a = [[10,6],[11,7]]
+// a = [[6,7],[8,9]]
 // alert(a)
+console.log(a)
 b = printMatrix(a)
-alert(b)
+console.log(b)
