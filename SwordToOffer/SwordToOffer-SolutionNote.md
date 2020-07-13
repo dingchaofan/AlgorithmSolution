@@ -3076,14 +3076,94 @@ function Power(base, exponent)
 
 * * *
 **思路**
+
+将矩阵第一行打印出来，然后逆时针旋转矩阵90度，直到矩阵为空
+
+矩阵逆时针旋转90度，等价于矩阵先转置再按行翻转
+
+矩阵逆时针旋转90度，等价于矩阵先转置再按列翻转
+
 * * *
 **Python代码实现**
-```python
 
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    # matrix类型为二维列表，需要返回列表
+    def printMatrix(self, matrix):
+        # write code here
+        result = []
+        result.extend(matrix.pop(0))
+        while (matrix):
+            matrix = self.rotateMatrix(matrix)
+            result.extend(matrix.pop(0))
+        return result
+    
+    # 矩阵逆时针旋转90度
+    def rotateMatrix(self, matrix): 
+        matrix = self.transMatrix(matrix)
+        matrix = self.reverseMatrix(matrix)
+        return matrix
+    
+    # 上下翻转矩阵 只接受Array作为参数 上下翻转只需要交换每一行的list
+    def reverseMatrix(self, matrix):
+        row = len(matrix)
+        # [5] [[5]] [[5,6]]
+        for i in range(row >> 1):
+            matrix[i], matrix[row-1-i] = matrix[row-1-i], matrix[i]
+        return matrix
+
+    # 主对角线翻转矩阵 矩阵转置 只接受Array作为参数
+    def transMatrix(self,matrix):
+        # matrix_T=list(map(list,zip(*matrix)))
+        row = len(matrix)
+        column = len(matrix[0])
+        matrix_T = [[matrix[j][i] for j in range(row) ] for i in range(column)]  
+        return matrix_T
 ```
 **JavaScript代码实现**
 ```js
+function printMatrix(matrix) {
+    // write code here
+    let result = []
+    result = result.concat(matrix.shift())
+    while (matrix != false) {
+        matrix = rotateMatrix(matrix)
+        result = result.concat(matrix.shift())
+    }
+    return result
+}
 
+// 矩阵逆时针旋转90度
+function rotateMatrix(matrix) {
+    matrix = transMatrix(matrix)
+    matrix = reverseMatrix(matrix)
+    return matrix
+}
+// 上下翻转矩阵 只接受Array作为参数
+function reverseMatrix(matrix) {
+    let row = matrix.length
+    for (let i = 0; i < row>>1; i++) {
+        let temp= matrix[row-1-i]
+        matrix[row-1-i] = matrix[i]
+        matrix[i] = temp
+    }
+    return matrix
+}
+// 主对角线翻转矩阵 矩阵转置 只接受Array作为参数
+function transMatrix(matrix) {
+    let row = matrix.length
+    let colunm = matrix[0].length
+    let res = []
+    for (let i = 0; i < colunm; i++) {
+        let temp = []
+        for (let j = 0; j < row; j++) {
+            temp.push(matrix[j][i])
+        }
+        res.push(temp) 
+    }
+    return res
+}
 ```
 ### 0. Title
 **题目描述**

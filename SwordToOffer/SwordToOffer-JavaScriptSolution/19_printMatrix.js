@@ -9,11 +9,10 @@
 function printMatrix(matrix) {
     // write code here
     let result = []
-    while (matrix == true) {
-        console.log(matrix)
-        console.log(result)
-        result = result.concat(matrix.shift())
+    result = result.concat(matrix.shift())
+    while (matrix != false) {
         matrix = rotateMatrix(matrix)
+        result = result.concat(matrix.shift())
     }
     return result
 }
@@ -26,66 +25,25 @@ function rotateMatrix(matrix) {
 }
 // 上下翻转矩阵 只接受Array作为参数
 function reverseMatrix(matrix) {
-
-    // if(typeof matrix == "number"){
-    //     return [].push([].push(matrix))
-    // }
     let row = matrix.length
-    // [5] [[5]] [[5,6]]
-    if (row <= 1) {
-        // [5]
-        // if (typeof(matrix[0]) == "number") {
-        //     return [].push(matrix)
-        // }
-        // [[5]]
-        return matrix // [[5]] [[5,6]]
+    for (let i = 0; i < row>>1; i++) {
+        let temp= matrix[row-1-i]
+        matrix[row-1-i] = matrix[i]
+        matrix[i] = temp
     }
-    // 初始化res
-    let res = []
-    for (let indexI = 0; indexI < matrix.length; indexI++) {
-        res[indexI] = []
-    }
-
-    for (let indexI = 0; indexI < (matrix.length / 2); indexI++) {
-        res[indexI] = matrix[row - 1 - indexI]
-        res[row - 1 - indexI] = matrix[indexI]
-    }
-    return res
+    return matrix
 }
 // 主对角线翻转矩阵 矩阵转置 只接受Array作为参数
 function transMatrix(matrix) {
     let row = matrix.length
+    let colunm = matrix[0].length
     let res = []
-    // [[10,11]] [11] [[11]]
-    if (row <= 1) {
-        // [11]
-        // if (typeof(matrix[0]) == "number") {
-        //     return [].push(matrix) // [[11]]
-        // }
-        // [[10,11]] [[11]]
-        if(matrix[0] instanceof Array){
-            // [[11]]
-            if(matrix[0].length <= 1){
-                return matrix // [[11]]
-            }
-            // [[10,11]]
-            for (let indexI = 0; indexI < matrix[0].length; indexI++) {
-                res[indexI] = []
-                res[indexI][0] = matrix[0][indexI]
-            }
-            // console.log(res)
-            return res
+    for (let i = 0; i < colunm; i++) {
+        let temp = []
+        for (let j = 0; j < row; j++) {
+            temp.push(matrix[j][i])
         }
-    }
-    if(row > 1){
-        for (let indexI = 0; indexI < matrix[0].length; indexI++) {
-            res[indexI] = []
-        }
-        for (let indexI = 0; indexI < matrix.length; indexI++) {
-            for (let indexJ = 0; indexJ < matrix[indexI].length; indexJ++) {
-                res[indexJ][indexI] = matrix[indexI][indexJ]
-            }
-        }
+        res.push(temp) 
     }
     return res
 }
