@@ -7,12 +7,82 @@
     <title>Document</title>
     <!-- <script type="text/javascript" src="26_BSTtoBiChainTable.js"></script>
     <script type="text/javascript" src="test.js"></script> -->
-    <script type="text/javascript" src="19_printMatrix.js"></script>
+    <!-- <script type="text/javascript" src="19_printMatrix.js"></script> -->
 </head>
 
 <body>
-    <script type="text/javascript">
-    </script>
+<script type="text/javascript">
+
+array = [9,7,8,2,6,5,3,1,4,0] 
+
+// 交换元素的三种方法
+if(false){
+    /** 1.使用中间变量 **/ 
+    var temp = arr[j + 1]; 
+    arr[j + 1] = arr[j]
+    arr[j] = temp
+    /** 2.适用纯数字的数组排序 **/
+    arr[j] = arr[j] +  arr[j + 1]
+    arr[j + 1] =  arr[j] - arr[j + 1]
+    arr[j] -= arr[j + 1]
+    /** 3.使用es6解构赋值 **/
+    [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+}
+
+// 插入排序
+function selectionSort(array) {
+    // 从1位置开始遍历array中每个元素，
+    for (let i = 1; i < array.length; i++) { // 如果当前元素<前一个元素
+        if(array[i] < array[i-1]){ 
+            let temp = array[i]   // 将当前元素值临时保存在temp中
+            let tempIndex = i-1   // 将已排序的长度i-1赋值给tempIndex
+            // 对已排序的数组进行从后往前遍历 直到找到大于temp的数或遍历完毕
+            while(tempIndex >= 0 && temp < array[tempIndex]){
+                // 已排序元素逐步向后挪位，为最新元素提供插入空间
+                array[tempIndex+1] = array[tempIndex] 
+                tempIndex -= 1
+            }
+            array[tempIndex+1] = temp
+        }
+    }
+    return array
+}
+
+function GetLeastNumbers_Solution(input, k)
+{
+    // write code here
+    let sortedList = quickSort(input)
+    return sortedList.slice(0,k)
+}
+
+function quickSort(array){
+    if (array.length <= 1) { return array }
+    let pivotIndex = array.length>>1
+    let pivot = array[pivotIndex]
+    let left = []
+    let right = []
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if(element<pivot){
+            left.push(element)
+        }
+        else{
+            right.push(element)
+        }
+    }
+    return quickSort(left).concat(pivot, quickSort(right));
+    // return quickSort(left).concat(pivot,quickSort(right))
+}
+
+// test case
+console.log(array)
+let b = GetLeastNumbers_Solution(array,4)
+// console.log(selectionSort.name)
+console.log(b)
+
+
+
+</script>
 </body>
 
 </html>
