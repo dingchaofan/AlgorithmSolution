@@ -85,10 +85,10 @@ function selectionSort(array) {
         for (let j = i + 1; j < array.length; j++){ 
             if(array[j] < array[minIndex]){ //寻找最小的数
                 minIndex = j                //将最小数的索引保存
-            }
-        // 将最小数交换到本次遍历的最前面
-        [array[i], array[minIndex]] = [array[minIndex], array[i]]   
+            }   
         }
+        // 将最小数交换到本次遍历的最前面
+        [array[i], array[minIndex]] = [array[minIndex], array[i]]
     }
     return array
 }

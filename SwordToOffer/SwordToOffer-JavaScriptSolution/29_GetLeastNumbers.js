@@ -31,3 +31,43 @@ function quickSort(array){
     }
     return quickSort(left).concat(pivot,quickSort(right))
 }
+
+function bubbleSort(array){
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array.length-i-1; j++) {
+            if(array[j]>array[j+1]){
+                [array[j],array[j+1]] = [array[j+1],array[j]]
+            }
+        }
+    }
+    return array
+}
+
+function selectSort(array){
+    let minIndex
+    for (let i = 0; i < array.length; i++) {
+        minIndex = i
+        for (let j = i + 1; j < array.length; j++) {
+            if(array[j] < array[minIndex]){
+                minIndex = j
+            }
+        }
+        [array[i], array[minIndex]] = [array[minIndex], array[i]]
+    }
+    return array
+}
+
+function insertSort(array){
+    for (let i = 1; i < array.length; i++) {
+        if(array[i] < array[i-1]){
+            let temp = array[i]
+            let tempIndex = i-1
+            while(tempIndex>=0 && temp<array[tempIndex]){
+                array[tempIndex+1] = array[tempIndex]
+                tempIndex -= 1
+            }
+            array[tempIndex+1] = temp
+        }
+    }
+    return array
+}
