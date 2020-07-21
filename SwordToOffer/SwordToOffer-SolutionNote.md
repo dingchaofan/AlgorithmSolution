@@ -6898,6 +6898,69 @@ function FindContinuousSequence(sum)
     return res
 }
 ```
+### 42. 和为S的两个数字
+**题目描述**
+输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
+输出描述:
+
+> 对应每个测试案例，输出两个数，小的先输出。
+
+* * *
+**思路**
+
+定义左右指针一个从左遍历，一个从右遍历，遍历条件为左指针小于右指针
+
+计算左右指针所指的数字的值之和，如果大于sum，右指针左移，如果小于sum，左指针右移，如果相等，保存到临时的res中，如果有新的左右指针符合条件，对比两个结果的乘积，乘积小的替换res，直到遍历完成，返回res
+
+实际上用这样的方法不需要检查乘积最小了，因为和为sum的两个数最大的情况是两个数最接近的时候，通过二元一次方程的最值可解。
+
+* * *
+**Python代码实现**
+
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    def FindNumbersWithSum(self, array, tsum):
+        # write code here
+        if(len(array) <= 1):
+            return []
+        low, high = 0, len(array)-1
+        resLow, resHigh = array[-1], array[-1]
+        while(low < high):
+            if(array[low] + array[high] == tsum):
+                if(array[low]*array[high] < resLow * resHigh):
+                    resLow, resHigh = array[low], array[high]
+                high -= 1
+                low += 1
+            elif(array[low] + array[high] > tsum):
+                high -= 1
+            else:
+                low += 1
+        if(resLow + resHigh != tsum):
+            return []
+        return resLow, resHigh
+
+```
+**JavaScript代码实现**
+```js
+function FindNumbersWithSum(array, sum) {
+    // write code 
+    let [low, high] = [0, array.length - 1]
+    while (low < high) {
+        if (array[low] + array[high] == sum) {
+            return [array[low], array[high]]
+        }
+        else if (array[low] + array[high] > sum) {
+            high -= 1
+        }
+        else {
+            low += 1
+        }
+    }
+    return []
+}
+```
+
 ### 0. Title
 **题目描述**
 * * *
