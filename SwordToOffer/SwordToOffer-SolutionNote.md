@@ -6830,14 +6830,73 @@ function GetUglyNumber_Solution(index) {
 
 * * *
 **思路**
+
+滑动窗口
+
+左边界为low，又边界为high，窗口之和用等差数列求和法，和为temp
+
+循环边界为low<=sum/2，左边界到sum的一半即可。
+
+当temp小于sum，窗口扩大，high+1
+
+当temp大于sum，窗口缩小，low+1
+
+当temp等于sum，将窗口的数列保存到结果中，然后缩小窗口，low+1
+
 * * *
 **Python代码实现**
 ```python
-
+# -*- coding:utf-8 -*-
+class Solution:
+    def FindContinuousSequence(self, tsum):
+        # write code here
+        low = 1
+        high = 2
+        tempSum = 0
+        res = []
+        while(low <= tsum/2):
+            tempSum = (low+high)*(high-low+1)/2
+            if(tempSum > tsum):
+                low += 1
+            elif (tempSum == tsum):
+                tempList = []
+                for i in range(low, high+1):
+                    tempList.append(i)
+                res.append(tempList)
+                low += 1
+            else:
+                high += 1
+        return res
 ```
 **JavaScript代码实现**
 ```js
-
+function FindContinuousSequence(sum)
+{
+    // write code here
+    // 滑动窗口
+    let low = 1 
+    let high = 2
+    let temp = 0
+    let res = []
+    while(low < sum/2){
+        temp = (low+high)*(high-low+1)/2
+        if(temp < sum){
+            high += 1
+        }
+        else if(temp === sum){
+            let tempList = []
+            for(let i = low; i<=high;i++){
+                tempList.push(i)
+            }
+            res.push(tempList)
+            low += 1
+        }
+        else{
+            low += 1
+        }
+    }
+    return res
+}
 ```
 ### 0. Title
 **题目描述**
@@ -6845,6 +6904,7 @@ function GetUglyNumber_Solution(index) {
 **思路**
 * * *
 **Python代码实现**
+
 ```python
 
 ```
