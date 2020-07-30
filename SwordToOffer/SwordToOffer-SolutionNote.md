@@ -3711,19 +3711,40 @@ function LastRemaining_Solution(n, m) {
 }
 ```
 
-### 0. Title
+### 47. 求1+2+3+...+n
 **题目描述**
+
+求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+
 * * *
 **思路**
+
+使用递归来模拟循环
+
 * * *
 **Python代码实现**
 
 ```python
-
+# -*- coding:utf-8 -*-
+class Solution:
+    def Sum_Solution(self, n):
+        # write code here
+        res = n
+        if(res):
+            res += self.Sum_Solution(n-1)
+        return res
 ```
 **JavaScript代码实现**
 ```js
-
+function Sum_Solution(n)
+{
+    // write code here
+    let res = n
+    if(res){
+        res += Sum_Solution(n-1)
+    }
+    return res
+}
 ```
 ### 48. 不用加减乘除做加法
 **题目描述**
@@ -3780,9 +3801,114 @@ function Add(num1, num2)
     return num1
 }
 ```
+### 54. 字符流中第一个不重复的字符
+**题目描述**
 
-## 题解笔记模板
-### 0. Title
+请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。
+
+输出描述:
+
+```
+如果当前字符流没有存在出现一次的字符，返回#字符。
+```
+
+* * *
+**思路**
+
+将字节流保存起来，通过哈希表统计字符流中每个字符出现的次数，顺便将字符流保存在string中，然后再遍历string，从哈希表中找到第一个出现一次的字符。
+
+* * *
+**Python代码实现**
+```python
+# -*- coding:utf-8 -*-
+class Solution:
+    def __init__(self):
+        self.s = ''
+        self.count = {}
+    # 返回对应char
+    def FirstAppearingOnce(self):
+        # write code here
+        for i in range(len(self.s)):
+            if self.count[self.s[i]] == 1:
+                return self.s[i]
+        return '#'
+    def Insert(self, char):
+        # write code here
+        self.s += char
+        if char in self.count:
+            self.count[char] += 1
+        else:
+            self.count[char] = 1
+```
+**JavaScript代码实现**
+```js
+//Init module if you need
+var map = {};
+function Init()
+{
+    // write code here
+    map = {};
+}
+//Insert one char from stringstream
+function Insert(ch)
+{
+    // write code here
+    map[ch]?map[ch]+=1:map[ch]=1
+}
+//return the first appearence once char in current stringstream
+function FirstAppearingOnce()
+{
+    // write code here
+    for(let i in map){
+        if(map[i]===1){
+            return i
+        }
+    }
+    return '#'
+}
+```
+### 63. 数据流中的中位数
+**题目描述**
+* * *
+**思路**
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+
+```
+### 64. 滑动窗口的最大值
+**题目描述**
+* * *
+**思路**
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+
+```
+
+## 回溯法（2道）
+### 65. 矩阵中的路径
+**题目描述**
+* * *
+**思路**
+* * *
+**Python代码实现**
+```python
+
+```
+**JavaScript代码实现**
+```js
+
+```
+### 66. 机器人的运动范围
 **题目描述**
 * * *
 **思路**
