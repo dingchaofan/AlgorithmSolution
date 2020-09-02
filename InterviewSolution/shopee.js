@@ -34,7 +34,8 @@ function isNiceNum(numStr){
         if(element === numStr[index+1] && element === numStr[index+2] && element === numStr[index+3]){
             return 'Y'
         }
-        else if(element === numStr[index+1]-1 && element === numStr[index+2]-2 && element === numStr[index+3]-3){
+        // numStr是string, numStr[index+1]-1是int 用===不行 要用== 类型转换
+        else if(element == numStr[index+1]-1 && element == numStr[index+2]-2 && element == numStr[index+3]-3){
             return 'Y'
         }
         else{
