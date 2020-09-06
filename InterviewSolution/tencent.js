@@ -91,12 +91,12 @@ for (let index = 0; index < arr.length; index++) {
 // 4. 日历组件
 
 function Calendar(container, year, month) {
+    console.log(container)
     this.year = year;
     this.month = month;
     this.html = html;
-    this.el = null; //TODO: 创建分页组件根节点
-    this,el = document.createElement("table")
-    if (!el) return;
+    this.el = document.createElement('table'); //TODO: 创建分页组件根节点
+    // if (!el) return;
     this.el.className = 'calendar';
     this.el.innerHTML = this.html();
     container.appendChild(this.el);
@@ -108,21 +108,19 @@ function Calendar(container, year, month) {
         if (!isPre && !isNext) return;
         if (isPre) {
             //TODO: 更新this.month和this.year
-            if(this.month - 1 < 1){
-                this.month = 12 
-                this.year = this.year - 1
-            }
-            else{
-                this.month = this.month - 1
+            if (this.month == 1) {
+                this.year -= 1
+                this.month = 12
+            } else {
+                this.month -= 1
             }
         } else {
             //TODO: 更新this.month和this.year
-            if(this.month + 1 > 12){
+            if (this.month == 12) {
+                this.year += 1
                 this.month = 1
-                this.year = this.year + 1
-            }
-            else{
-                this.month = this.month + 1
+            } else {
+                this.month += 1
             }
         }
         this.el.innerHTML = this.html();
@@ -133,8 +131,48 @@ function Calendar(container, year, month) {
         var year = +this.year || 0;
         var month = (+this.month || 0) - 1;
         var day = date.getDate();
+        var current_month = date.getMonth();
+        var current_year = date.getFullYear();
         //TODO: 生成组件的内部html字符串
-        return '';
+        let head =
+            `<thead><tr><th class="pre"><</th><th colspan="5" class="date">${year}.${month<9?'0'+(month+1):String((month+1))}</th><th class="next">></th></tr><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>`
+        let body = ''
+        let start = new Date(year, month, 1).getUTCDay()
+        if (start == 0) {
+            start = 6
+        }
+        let days = 31
+        if (month == 3 || month == 5 || month == 8 || month == 10) {
+            days = 30
+        }
+        if (month == 1) {
+            if ((year % 4 == 0 && year % 100 != 0) || year % 1000 == 0) {
+                days = 29
+            } else {
+                days = 28
+            }
+        }
+        let count = 0
+        for (let i = 0; i < 6; i++) {
+            if (i == 5 && count - start + 1 > days) {
+                continue
+            }
+            body += '<tr>'
+            for (let j = 0; j < 7; j++) {
+                if (count >= start && count - start + 1 <= days) {
+                    if (count - start + 1 == day && month == current_month && year == current_year) {
+                        body += `<td class="current">${count-start+1}</td>`
+                    } else {
+                        body += `<td>${count-start+1}</td>`
+                    }
+                } else {
+                    body += '<td></td>'
+                }
+                count++
+            }
+            body += '</tr>'
+        }
+        return head + body;
     }
 }
 
