@@ -146,6 +146,7 @@ function Calendar(container, year, month) {
             days = 30
         }
         if (month == 1) {
+            // 可以用new Date(2020, 2, 0).getDate()获取二月份的天数
             if ((year % 4 == 0 && year % 100 != 0) || year % 1000 == 0) {
                 days = 29
             } else {
