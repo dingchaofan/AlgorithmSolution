@@ -127,3 +127,36 @@ let arr2 = arr.reduce(function (ar, cur) {
     }
     return ar
 }, [])
+
+
+// 随机生成100个数，其中随机取10个升序排列
+let arr = []
+while (arr.length < 100) {
+    arr.push(Math.floor(Math.random() * 100 + 1))
+}
+let sortArr = []
+sortArr.push(arr[Math.floor(Math.random() * 100)])
+while (sortArr.length < 10) {
+    let tempNum = arr[Math.floor(Math.random() * 100)]
+    if (sortArr.indexOf(tempNum) == -1) {
+        if (tempNum >= sortArr[sortArr.length - 1]) {
+            sortArr.push(tempNum)
+            continue
+        }
+        else if (tempNum <= sortArr[0]) {
+            sortArr.unshift(tempNum)
+            continue
+        }
+        else {
+            for (let index = sortArr.length - 2; index >= 1; index--) {
+                const element = sortArr[index];
+                if (tempNum <= element && tempNum >= sortArr[index - 1]) {
+                    sortArr.splice(index, 0, tempNum)
+                    break
+                }
+            }
+        }
+    }
+}
+console.log(sortArr)
+
