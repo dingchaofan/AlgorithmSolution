@@ -127,6 +127,20 @@ let arr2 = arr.reduce(function (ar, cur) {
     }
     return ar
 }, [])
+// 直接在原数组上操作 不用额外空间 复杂度是O(n)
+function getArr3(arr) {
+    let point = 1
+    for (let index = 1; index < arr.length; index++) {
+        let cur = arr[point]
+        if(arr.indexOf(cur)<point){
+            arr.push(arr.splice(point,1)[0])
+        }
+        else{
+            point+=1
+        }
+    }
+    return arr.slice(0,point)
+}
 
 
 // 随机生成100个数，其中随机取10个升序排列
