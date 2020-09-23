@@ -34,7 +34,16 @@ function deepClone(obj) {
     let copy = obj instanceof Array ? [] : {}
     for (let i in obj) {
         if (obj.hasOwnProperty(i)) {
-            copy[i] = typeof obj[i] === 'object' ? deepClone(obj[i]) : obj[i]
+            let element = obj[i]
+            if (element && typeof element == 'object') {
+                copy[key] = Array.isArray(element) ? [] : {}
+                // resObj[key] = (element.constructor == Array) ? [] : {}
+                copy[key] = deepCopy(obj[key]) 
+                // arguments.callee(element, resObj[key])
+            }
+            else {
+                copy[key] = element
+            }
         }
     }
     return copy
