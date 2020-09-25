@@ -183,3 +183,21 @@ while (sortArr.length < 10) {
 }
 console.log(sortArr)
 
+// add(1)(2)(3)(5,6).sumOf() 累加器
+// https://blog.csdn.net/weixin_38641550/article/details/81565223
+function add() {
+    let x = Array.from(arguments)
+    var sum = x.reduce((a,b)=>{
+        return a+b
+    },0);
+    var tmp = function (y) {
+      sum = sum + y;
+      return tmp;
+    };
+    tmp.sumOf = function () {
+      return sum;
+    };
+    return tmp;
+}
+console.log(add(1)(2)(3)(5,6).sumOf())
+

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Css Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      /* 左边固定右边自适应 float写法 overflow: hidden触发BFC dom先左后右加载*/
+      #content1 {
+        width: 100%;
+        height: 100px;
+        background-color: aqua;
+      }
+      #content1 .left {
+        float: left;
+        height: 100%;
+        width: 150px;
+        background-color: blueviolet;
+      }
+      #content1 .right {
+        height: 100%;
+        /* width: 100%; */
+        overflow: hidden; /* 创建BFC */
+        background-color: burlywood;
+      }
+
+      /* 左边固定右边自适应 使用position 右边设置成absolute 给定left偏移 可以让右边dom先加载 */
+      #content2 {
+        width: 100%;
+        height: 100px;
+        position: relative;
+        background-color: aqua;
+      }
+      #content2 .left {
+        height: 100%;
+        width: 150px;
+        background-color: blueviolet;
+      }
+      #content2 .right {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 150px;
+        top: 0;
+        background-color: burlywood;
+      }
+
+      /* 左边固定右边自适应 float margin-left dom先左后右加载*/
+      #content3 {
+        width: 100%;
+        height: 100px;
+        background-color: aqua;
+      }
+      #content3 .left {
+        float: left;
+        height: 100%;
+        width: 150px;
+        background-color: blueviolet;
+      }
+      #content3 .right {
+        height: 100%;
+        margin-left: 150px;
+        background-color: burlywood;
+      }
+
+      /* flex dom可以先右后左加载*/
+      #content4 {
+        width: 100%;
+        height: 100px;
+        background-color: aqua;
+        display: flex;
+      }
+      #content4 .left {
+        width: 150px;
+        height: 100%;
+        /* flex-grow和flex-shrink和flex-basis的缩写方式 默认为0 1 auto*/
+        /* flex: 0 0 150px;  */
+        /* order：设置元素的排列权重 值越大越在后 */
+        order: 1;
+        background-color: blueviolet;
+      }
+      #content4 .right {
+        flex: 1;
+        order: 2;
+        background-color: burlywood;
+      }
+    </style>
+    <style>
+      .container {
+        overflow: hidden;
+        padding: 0 0 0 150px;
+      }
+      #main {
+        width: 100%;
+        height: 100px;
+        background-color: aqua;
+      }
+      #main > div {
+        position: relative;
+        float: left;
+        height: 100px;
+      }
+      #main .left {
+        width: 150px;
+        margin-left: -100%;
+        left: -150px;
+        background-color: burlywood;
+      }
+      #main .mid {
+        width: 100%;
+        background-color: blueviolet;
+      }
+      #main .right {
+        width: 150px;
+        margin-left: -150px;
+        /* left: -150px; */
+        background-color: burlywood;
+      }
+
+      /* flex三栏布局 */
+      .containerflex {
+        background-color: aqua;
+        display: flex;
+        height: 100px;
+      }
+      .containerflex .mid {
+        background-color: blueviolet;
+        width: 100%;
+        order: 2;
+      }
+      .containerflex .left {
+        background-color: burlywood;
+        width: 150px;
+        order: 1;
+      }
+      .containerflex .right {
+        background-color: burlywood;
+        width: 150px;
+        order: 3;
+      }
+    </style>
+  </head>
+  <body>
+    float写法 创建BFC
+    <div id="content1">
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </div>
+    使用position 可以先右后左加载
+    <div id="content2">
+      <div class="right">right</div>
+      <div class="left">left</div>
+    </div>
+    float margin
+    <div id="content3">
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </div>
+    flex布局 可以先右后左加载
+    <div id="content4">
+      <div class="right">right</div>
+      <div class="left">left</div>
+    </div>
+    三栏布局
+    <div class="container">
+      <div id="main">
+        <div class="mid">mid</div>
+        <div class="left">left</div>
+
+        <div class="right">right</div>
+      </div>
+    </div>
+    flex三栏布局
+    <div class="containerflex">
+      <!-- 优先渲染 -->
+      <div class="mid">center</div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </div>
+  </body>
+</html>

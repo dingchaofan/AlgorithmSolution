@@ -1,4 +1,4 @@
-function sum(value){
+function sum1(value){
     function sumOf(interValue){
         return sum(value+interValue)
     }
@@ -6,9 +6,18 @@ function sum(value){
     return sumOf
 }
 
-function sum(a){
-	return function(b){
-		return function(c){return a+b+c};
-	}
+function add() {
+    let x = Array.from(arguments)
+    var sum = x.reduce((a,b)=>{
+        return a+b
+    },0);
+    var tmp = function (y) {
+      sum = sum + y;
+      return tmp;
+    };
+    tmp.sumOf = function () {
+      return sum;
+    };
+    return tmp;
 }
-console.log(sum(1)(2)(3).valueOf())
+console.log(add(1)(2)(3)(5,6).sumOf()
