@@ -18,7 +18,6 @@ def maxNum(str):
                 if(abs(Enum-Fnum) > maxNum):
                     maxNum = abs(Enum-Fnum)
     return maxNum
-           
-
+              
 inputstr = "EFFEF"
 print(maxNum(inputstr))
